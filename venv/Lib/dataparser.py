@@ -9,7 +9,7 @@ import idx2numpy
 # This converts all instances in digit_filename to csv format and outputs a single file.
 # Instances are NOT labelled. The dataset is left unsupervised.
 
-def readAllDigits(digit_filename, out_filename):
+def convertAllDigits(digit_filename, out_filename):
 
     ndarr = idx2numpy.convert_from_file(digit_filename)
     train_data = open(out_filename, "w+")
@@ -32,7 +32,7 @@ def readAllDigits(digit_filename, out_filename):
 # This converts all instances in digit_filename to csv format and outputs a single file.
 # Only converts the first N instances.
 # The instances are not labelled.
-def readNDigits(n, digit_filename, out_filename):
+def convertNDigits(n, digit_filename, out_filename):
 
     ndarr = idx2numpy.convert_from_file(digit_filename)
     train_data = open(out_filename, "w+")
@@ -53,7 +53,7 @@ def readNDigits(n, digit_filename, out_filename):
 # Transforms MNIST label data to the csv format.
 # This function converts only the instance class labels to csv
 # Only the first N labels are processed.
-def readNLabels(n, label_filename, out_filename):
+def convertNLabels(n, label_filename, out_filename):
 
     ndarr = idx2numpy.convert_from_file(label_filename)
     train_data = open(out_filename, "w+")
@@ -67,10 +67,10 @@ def readNLabels(n, label_filename, out_filename):
         train_data.write(str(i) + ",")
         c += 1
 
-# Transforms MNIST digit data to the csv format and addss a class label to aid with training
+# Transforms MNIST digit data to the csv format and adds a class label to aid with training
 # MNIST data set has data instances and their labels stored in separate files.
 # This function joins the label to instance in a single file.
-def readLabelledDigits(n, label_filename, instance_filename, out_filename):
+def labelDigits(n, label_filename, instance_filename, out_filename):
     dirname = os.path.dirname(os.path.dirname(__file__))
     instance_filename = dirname + instance_filename
     label_filename = dirname + label_filename
@@ -92,8 +92,9 @@ def readLabelledDigits(n, label_filename, instance_filename, out_filename):
 
 
 # Transforms MNIST digit data into csv format and adds a class label to aid with training.
-# The CSV output data is then divided into multiple files to split the data set up into manageable chunks.
-def joinImageLabelsToMultipleFiles(label_filename, instance_filename, out_filename):
+# The CSV output data is then divided into multiple files to split the data set up into manageable chunks
+# of 20000 instances per file.
+def labelDigitsToMultipleFiles(label_filename, instance_filename, out_filename):
     dirname = os.path.dirname(os.path.dirname(__file__))
     instance_filename = dirname + instance_filename
     label_filename = dirname + label_filename
